@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BaiTapLon.Models.Pet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-start">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h1 class="display-1 text-uppercase text-dark mb-lg-4">Pet Shop</h1>
+                    <h1 class="text-uppercase text-white mb-lg-4">Hãy Vui Vẻ Cùng Thú Cưng</h1>
+                    <p class="fs-4 text-white mb-lg-4">Nếu chưa có thú cưng hãy đến với chúng tôi. Bạn muốn mua đồ cho thú cưng của mình hãy đến đây</p>
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start pt-5">
+                        <button type="button" class="btn-play" data-bs-toggle="collapse"
+                                data-src="https://www.youtube.com/watch?v=8l7NqvJKH3w&ab_channel=CUCCUMEDIA" data-bs-target="#navbarCollapse">
+                            <span></span>
+                        </button>
+                        <h5 class="font-weight-normal text-white m-0 ms-4 d-none d-sm-block">Play Video</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<h1>Pet Phổ Biến</h1>
+
+<div class="container">
+    <div class="owl-carousel product-carousel">
+    @foreach (var item in Model)
+    {
+        
+            <div class="pb-5">
+                <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                    <img style="height:200px;width:200px;" class="img-fluid mb-4" src="@item.HinhAnh" alt="">
+                    <h6 class="text-uppercase">@item.TenPet</h6>
+                    <h5 class="text-primary mb-0">@item.Gia vnd</h5>
+                    <div class="btn-action d-flex justify-content-center">
+                        <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                        <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+    }
+        
+    </div>
+</div>
+           
+    
+
+     
