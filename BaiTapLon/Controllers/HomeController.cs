@@ -1,5 +1,6 @@
 ﻿using BaiTapLon.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 
 namespace BaiTapLon.Controllers
@@ -32,26 +33,57 @@ namespace BaiTapLon.Controllers
         {
             return View();
         }
+        public IActionResult DichVu()
+        {
+            return View();
+        }
+        public IActionResult SanPham()
+        {
+            var listPets = (from p in _context.Pets select p).ToList();
+            return View(listPets);
+        }
         [HttpGet]
         public IActionResult LoginRegister() 
         {
             return View();
         }
         [HttpPost]
-		public IActionResult Login(String taikhoan, String matkhau)
-		{
-			return Json(new {taikhoan,matkhau});
+        public IActionResult Login(String taikhoan, String matkhau)
+        {
+            var check = from n in _context.NguoiDungs where n.TaiKhoan == taikhoan && n.MatKhau == matkhau select n;
+                Console.WriteLine(check);
+            if (!check.IsNullOrEmpty())
+            {
+                HttpContext.Session.SetString("taikhoan", taikhoan);
+                var user = _context.NguoiDungs.Where(m => m.TaiKhoan == taikhoan && m.MatKhau == matkhau).FirstOrDefault();
+                if (user.ChucVu == 1)
+                {
+                    return RedirectToAction("QuanLyPet", "NguoiDung");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Pets");
+                }
+            }
+            else
+            {
+                return RedirectToAction("LoginRegister", "Home");
+            }
+            
 		}
         [HttpPost]
-        public IActionResult SignUp()
+        public IActionResult SignUp([Bind("TaiKhoan", "MatKhau")] NguoiDung nguoiDung)
         {
-            return View();
+            _context.NguoiDungs.Add(nguoiDung);
+            _context.SaveChanges();
+            return RedirectToAction("LoginRegister");
         }
-		public IActionResult Logout()
+        public IActionResult Logout()
         {
-            return View();
+            HttpContext.Session.Remove("taikhoan");
+            return RedirectToAction("Index","Pets");
+        }
 
-        }
-        
+
     }
 }

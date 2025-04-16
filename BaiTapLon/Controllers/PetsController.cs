@@ -47,7 +47,7 @@ namespace BaiTapLon.Controllers
         // GET: Pets/Create
         public IActionResult Create()
         {
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMucs, "ID", "ID");
+            ViewData["DanhMucID"] = _context.DanhMucs.ToList();
             return View();
         }
 
@@ -56,32 +56,26 @@ namespace BaiTapLon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TenPet,Gia,ChieuCao,CanNang,MauLong,HinhAnh,DanhMucID")] Pet pet)
+        public async Task<IActionResult> Create([Bind("TenPet,Gia,ChieuCao,CanNang,MauLong, DanhMucID")] Pet pet, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
+                var petcu = _context.Pets.OrderByDescending(m => m.ID).FirstOrDefault();
+                int idMoi = petcu.ID+ 1;
+                pet.HinhAnh = Upload.UploadFile.UploadAnh(idMoi, "Pet", file);
                 _context.Add(pet);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("QuanLyPet", "NguoiDung");
             }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMucs, "ID", "ID", pet.DanhMucID);
             return View(pet);
         }
 
         // GET: Pets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Pets == null)
-            {
-                return NotFound();
-            }
 
             var pet = await _context.Pets.FindAsync(id);
-            if (pet == null)
-            {
-                return NotFound();
-            }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMucs, "ID", "ID", pet.DanhMucID);
+            ViewData["DanhMucID"] = _context.DanhMucs.ToList();
             return View(pet);
         }
 
@@ -90,34 +84,19 @@ namespace BaiTapLon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TenPet,Gia,ChieuCao,CanNang,MauLong,HinhAnh,DanhMucID")] Pet pet)
+        public async Task<IActionResult> Edit([Bind("ID,TenPet,Gia,ChieuCao,CanNang,MauLong,HinhAnh,DanhMucID")] Pet pet, IFormFile? file)
         {
-            if (id != pet.ID)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
-                try
-                {
+                    if(file != null)
+                    {
+                        pet.HinhAnh = Upload.UploadFile.UploadAnh(pet.ID, "Pet", file);
+                    }    
                     _context.Update(pet);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PetExists(pet.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("QuanLyPet", "NguoiDung");
             }
-            ViewData["DanhMucID"] = new SelectList(_context.DanhMucs, "ID", "ID", pet.DanhMucID);
             return View(pet);
         }
 
