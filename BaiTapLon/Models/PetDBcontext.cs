@@ -11,6 +11,7 @@ namespace BaiTapLon.Models
 
         public DbSet<DonHang> DonHangs { get;set;}
         public DbSet<ChiTietDonHang> chiTietDonHangs { get;set;}
+        public DbSet<GioHang> GioHangs{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pet>().ToTable("tbPet");
@@ -23,6 +24,7 @@ namespace BaiTapLon.Models
 
             });
             modelBuilder.Entity<DanhMuc>().ToTable("tbDanhMuc");
+            modelBuilder.Entity<GioHang>().ToTable("GioHang");
         }
     }
 }

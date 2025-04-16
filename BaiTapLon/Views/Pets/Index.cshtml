@@ -15,7 +15,7 @@
                                 data-src="https://www.youtube.com/watch?v=8l7NqvJKH3w&ab_channel=CUCCUMEDIA" data-bs-target="#navbarCollapse">
                             <span></span>
                         </button>
-                        <h5 class="font-weight-normal text-white m-0 ms-4 d-none d-sm-block">Play Video</h5>
+                        <h5 class="font-weight-normal text-white m-0 ms-4 d-none d-sm-block">Xem Đoạn Phim</h5>
                     </div>
                 </div>
             </div>
@@ -27,16 +27,17 @@
     <div class="owl-carousel product-carousel">
     @foreach (var item in Model)
     {
-        
             <div class="pb-5">
                 <div class="product-item position-relative bg-light d-flex flex-column text-center">
-                    <img style="height:200px;width:200px;" class="img-fluid mb-4" src="@item.HinhAnh" alt="">
+                   
+                    <img style="height:200px;width:200px;" class="img-fluid mb-4" src="@("/img/" + item.HinhAnh)" alt="">
                     <h6 class="text-uppercase">@item.TenPet</h6>
-                    <h5 class="text-primary mb-0">@item.Gia vnd</h5>
+                    <h5 class="text-primary mb-0">@item.Gia VND</h5>
                     <div class="btn-action d-flex justify-content-center">
-                        <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                        <button class="ThemGioHang btn btn-primary py-2 px-3" data-id="@item.ID"><i class="bi bi-cart"></i></button>
                         <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
                     </div>
+                   
                 </div>
             </div>
             
@@ -45,6 +46,39 @@
     </div>
 </div>
            
-    
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(document).ready(function () {
+            $(".ThemGioHang").click(function () {
+                var petId = $(this).data("id");
+                $.ajax({
+                    url: "/GioHang/Create",
+                    data: {
+                        "id": petId,
+                        type: "ajax"
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Bạn đã thêm vào giỏ hàng thành công!!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Vui lòng đăng nhập!!',
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+}
+
 
      

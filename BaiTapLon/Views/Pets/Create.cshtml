@@ -1,62 +1,65 @@
 ﻿@model BaiTapLon.Models.Pet
 
 @{
-    ViewData["Title"] = "Create";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    List<DanhMuc> danhMucs = (List<DanhMuc>) ViewData["DanhMucID"];
 }
 
-<h1>Create</h1>
+<h1>Thêm Mới</h1>
 
 <h4>Pet</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-controller="Pets" , new { enctype="multipart/form-data" }>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TenPet" class="control-label"></label>
+                <label asp-for="TenPet" class="control-label">Tên pet</label>
                 <input asp-for="TenPet" class="form-control" />
                 <span asp-validation-for="TenPet" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gia" class="control-label"></label>
+                <label asp-for="Gia" class="control-label">Giá</label>
                 <input asp-for="Gia" class="form-control" />
                 <span asp-validation-for="Gia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ChieuCao" class="control-label"></label>
+                <label asp-for="ChieuCao" class="control-label">Chiều cao</label>
                 <input asp-for="ChieuCao" class="form-control" />
                 <span asp-validation-for="ChieuCao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CanNang" class="control-label"></label>
+                <label asp-for="CanNang" class="control-label">Cân nặng</label>
                 <input asp-for="CanNang" class="form-control" />
                 <span asp-validation-for="CanNang" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MauLong" class="control-label"></label>
+                <label asp-for="MauLong" class="control-label">Màu lông</label>
                 <input asp-for="MauLong" class="form-control" />
                 <span asp-validation-for="MauLong" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HinhAnh" class="control-label"></label>
-                <input asp-for="HinhAnh" class="form-control" />
-                <span asp-validation-for="HinhAnh" class="text-danger"></span>
+                <label>Ảnh</label>
+                <input type="file"  name="file" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="DanhMucID" class="control-label"></label>
-                <select asp-for="DanhMucID" class ="form-control" asp-items="ViewBag.DanhMucID"></select>
+                <label asp-for="DanhMucID" class="control-label">Danh Mục</label>
+                <select asp-for="DanhMucID" class ="form-control">
+                    @foreach(var item in danhMucs)
+                    {
+                        <option value="@item.ID">@item.TenDanhMuc</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="QuanLyPet" asp-controller="NguoiDung">Trở về</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

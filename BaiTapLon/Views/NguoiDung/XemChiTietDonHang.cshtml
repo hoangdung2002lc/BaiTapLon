@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BaiTapLon.Models.ChiTietDonHang>
+<main role="main">
+    <!-- Block content - Đục lỗ trên giao diện bố cục chung, đặt tên là `content` -->
+    <div class="container mt-4">
+        <div id="thongbao" class="alert alert-danger d-none face" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Tên pet</th>
+                            <th>Giá</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody id="datarow">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Pets.ID</td>
+                                <td>
+                                    <img style="height: 75px; width:75px" src="@("/img/" + item.Pets.HinhAnh)">
+                                </td>
+                                <td>@item.Pets.TenPet</td>
+                                <td>@item.Pets.Gia</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+               
+            </div>
+        </div>
+    </div>
+    <!-- End block content -->
+</main>
