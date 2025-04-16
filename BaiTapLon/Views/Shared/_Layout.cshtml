@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>PET SHOP - Pet Shop Website Template</title>
+    <title>PET SHOP</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -64,7 +64,7 @@
     <!-- Topbar End -->
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm py-3 py-lg-0 px-3 px-lg-0">
-        <a href="index.html" class="navbar-brand ms-lg-5">
+        <a href="/Pets/Index" class="navbar-brand ms-lg-5">
             <h1 class="m-0 text-uppercase text-dark"><i class="bi bi-shop fs-1 text-primary me-3"></i>Pet Shop</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -72,11 +72,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="/Pets/Index" class="nav-item nav-link active">Trang Chủ</a>
+                <a href="/Pets/Index" class="nav-item nav-link">Trang Chủ</a>
                 <a href="/Home/ThongTin" class="nav-item nav-link">Thông Tin</a>
-                <a href="service.html" class="nav-item nav-link">Dịch Vụ</a>
-                <a href="product.html" class="nav-item nav-link">Sản Phẩm</a>
-                <a href=@Url.ActionLink("LoginRegister","Home") class="nav-item nav-link nav-contact bg-primary text-white px-5 ms-lg-5">Đăng Nhập<i class="bi bi-arrow-right"></i></a>
+                <a href="/Home/DichVu" class="nav-item nav-link">Dịch Vụ</a>
+                <a href="/Home/SanPham" class="nav-item nav-link">Sản Phẩm</a>
+                <a href="/GioHang/Index" class="nav-item nav-link">Giỏ Hàng</a>
+                @if (Context.Session.GetString("taikhoan") == null)
+                {
+                    <a href=@Url.ActionLink("LoginRegister","Home") class="nav-item nav-link nav-contact bg-primary text-white px-5 ms-lg-5">Đăng Nhập<i class="bi bi-arrow-right"></i></a>
+                }
+                else
+                {
+                    <a href="/NguoiDung/DonHang" class="nav-item nav-link">Đơn hàng</a>
+                    <a href=@Url.ActionLink("Logout","Home") class="nav-item nav-link nav-contact bg-primary text-white px-5 ms-lg-5">Đăng xuất<i class="bi bi-arrow-right"></i></a>
+                }
+                
             </div>
         </div>
     </nav>
@@ -103,9 +113,14 @@
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-body mb-2" href="/Pets/Index"><i class="bi bi-arrow-right text-primary me-2"></i>Trang Chủ</a>
                         <a class="text-body mb-2" href="/Home/ThongTin"><i class="bi bi-arrow-right text-primary me-2"></i>Thông Tin</a>
-                        <a class="text-body mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Dịch Vụ</a>
-                        <a class="text-body mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Sản Phẩm</a>
-                        <a class="text-body" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Đăng Nhập</a>
+                        <a class="text-body mb-2" href="/Home/DichVu"><i class="bi bi-arrow-right text-primary me-2"></i>Dịch Vụ</a>
+                        <a class="text-body mb-2" href="/Home/SanPham"><i class="bi bi-arrow-right text-primary me-2"></i>Sản Phẩm</a>
+                        @if(Context.Session.GetString("taikhoan") == null)
+                        {
+                            <a class="text-body" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Đăng Nhập</a>
+                        }else{
+                            <a class="text-body" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Đã xuất</a>
+                        }
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">

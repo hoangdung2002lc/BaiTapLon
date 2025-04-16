@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BaiTapLon.Models.DonHang>
+<main role="main">
+    <!-- Block content - Đục lỗ trên giao diện bố cục chung, đặt tên là `content` -->
+    <div class="container mt-4">
+        <div id="thongbao" class="alert alert-danger d-none face" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
+        <h1 class="text-center">Đơn hàng</h1>
+        <div class="row">
+            <div class="col col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên khách hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Ngày đặt</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datarow">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="XemChiTietDonHang" asp-controller="NguoiDung" asp-route-id="@item.ID">
+                                        @item.ID
+                                    </a>
+                                </td>
+                                <td>@item.TenKhachHang</td>
+                                <td class="text-right">@item.SoDienThoai</td>
+                                <td class="text-right">@item.DiaChi</td>
+                                <td class="text-right">@item.NgayDat</td>
+                                <td>
+                                    <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` -->
+                                    <a asp-action="HuyDonHang" asp-controller="NguoiDung" asp-route-id="@item.ID" id="delete_1" data-sp-ma="2" class="btn btn-danger btn-delete-sanpham">
+                                        <i class="fa fa-trash" aria-hidden="true"></i> Hủy
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+               
+            </div>
+        </div>
+    </div>
+    <!-- End block content -->
+</main>

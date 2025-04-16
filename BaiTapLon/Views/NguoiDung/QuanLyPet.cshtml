@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BaiTapLon.Models.Pet>
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="tab-content" id="orders-table-tab-content">
+	<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+		<div class="app-card app-card-orders-table shadow-sm mb-5">
+			<div class="app-card-body">
+				<div class="table-responsive">
+					<a asp-action="Create" asp-controller="Pets" style="font-size:20px; color:green">Thêm</a>
+					<table class="table mb-0 text-left">
+						<thead>
+							<tr>
+								<th class="cell">ID</th>
+								<th class="cell">Hình ảnh</th>
+								<th class="cell">Tên pet</th>
+								<th class="cell">Giá</th>
+								<th class="cell">Chiều cao</th>
+								<th class="cell">Cân nặng</th>
+								<th class="cell">Màu lông</th>
+								<th class="cell">Hành Động</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td class="cell">@item.ID</td>
+									<td class="cell">
+										<img style="height: 75px; width:75px" src="@("/img/" + item.HinhAnh)">
+									</td>
+									<td class="cell">@item.TenPet</td>
+									<td class="cell">@item.Gia</td>
+									<td class="cell">@item.ChieuCao</td>
+									<td class="cell">@item.CanNang</td>
+									<td class="cell">@item.MauLong</td>
+									<td class="cell">
+										<a class="btn-sm app-btn-secondary" asp-action="Edit" asp-controller="Pets" asp-route-id="@item.ID">Sửa</a>
+										<a class="btn-sm app-btn-secondary" href="#">Xóa</a>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div><!--//table-responsive-->
+
+			</div><!--//app-card-body-->
+		</div><!--//app-card-->
+
+
+	</div><!--//tab-pane-->
+
+</div><!--//tab-content-->
